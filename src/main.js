@@ -5,28 +5,31 @@ import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
-const products = await fetchProductsList('computador');
-products.forEach(async (element) => {
-  const product = await createProductElement(element);
-  document.querySelector('.products').appendChild(product);
-});
+async function loadProducts() {
+  const productsSection = document.querySelector('.products');
 
-export const loading = () => {
-  const loaded = document.createElement('p');
-  loaded.className = 'loading';
-  loaded.innerHTML = 'carregando...';
-  document.querySelector('.products').appendChild(loaded);
-};
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerHTML = 'Carregando...';
+  productsSection.appendChild(loading);
 
-export const errorLoading = () => {
-  const loaded = document.createElement('p');
-  loaded.className = 'error';
-  loaded.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
-  document.querySelector('.products').appendChild(loaded);
-};
+  try {
+    const products = await fetchProductsList('computador');
 
-export const cleanLoading = () => {
-  const loaded = document.createElement('p');
-  loaded.innerHTML = '';
-  document.querySelector('.products').appendChild(loaded);
-};
+    loading.remove();
+
+    products.forEach(async (element) => {
+      const product = await createProductElement(element);
+      document.querySelector('.products').appendChild(product);
+    });
+  } catch (error) {
+    loading.remove();
+
+    const errorMessage = document.createElement('p');
+    errorMessage.className = 'error';
+    errorMessage.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
+    productsSection.appendChild(errorMessage);
+  }
+}
+
+loadProducts();
