@@ -8,6 +8,5 @@ export const fetchProductsList = async (param) => {
   }
   const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${param}`);
   const data = await response.json();
-  console.log(data);
   return data.results;
 };
