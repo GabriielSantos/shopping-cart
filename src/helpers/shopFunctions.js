@@ -121,6 +121,10 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
     'product__add',
     'Adicionar ao carrinho!',
   );
+
+  cartButton.addEventListener('click', () => {
+    
+  });
   section.appendChild(cartButton);
 
   return section;
