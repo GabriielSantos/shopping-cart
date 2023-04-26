@@ -31,11 +31,11 @@ async function loadProducts() {
       const cartProducts = document.querySelector('.cart__products');
 
       buttonAddCart.addEventListener('click', async () => {
-        const id = getIdFromProduct(product);
-        const productData = await fetchProduct(id);
+        const idProduct = getIdFromProduct(product);
+        const productData = await fetchProduct(idProduct);
         const cartElement = createCartProductElement(productData);
 
-        saveCartID(id);
+        saveCartID(idProduct);
         cartProducts.appendChild(cartElement);
       });
     });
