@@ -1,17 +1,25 @@
-export const fetchProduct = async (idProduct) => {
-  if (!idProduct) {
-    throw new Error('ID não informado');
+export const fetchProduct = (id) => {
+  const endpoint = `https://api.mercadolibre.com/items/${id}`;
+
+  if (id === undefined) {
+    return Promise.reject(new Error('ID não informado'));
   }
-  const response = await fetch(`https://api.mercadolibre.com/items/${idProduct}`);
-  const data = await response.json();
-  return data;
+
+  return fetch(endpoint)
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => error.message);
 };
 
-export const fetchProductsList = async (productList) => {
-  if (!productList) {
+export const fetchProductsList = (searchTerm) => {
+  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${searchTerm}`;
+
+  if (searchTerm === undefined) {
     throw new Error('Termo de busca não informado');
   }
-  const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${productList}`);
-  const data = await response.json();
-  return data.results;
+
+  return fetch(endpoint)
+    .then((response) => response.json())
+    .then((data) => data.results)
+    .catch((error) => console.log(error.message));
 };
