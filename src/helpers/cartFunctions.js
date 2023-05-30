@@ -11,6 +11,11 @@ export const getSavedCartIDs = () => {
  * Função que adiciona um product ao carrinho.
  * @param {string} id - ID do product a ser adicionado.
  */
+
+export const getSavedQuantity = () => {
+  const quantity = localStorage.getItem('quantity');
+  return quantity ? JSON.parse(quantity) : [];
+};
 export const saveCartID = (id) => {
   if (!id) throw new Error('Você deve fornecer um ID');
 
@@ -38,11 +43,6 @@ export const removeCartID = (id) => {
   localStorage.setItem('quantity', JSON.stringify(quantity));
 };
 
-export const getSavedQuantity = () => {
-  const quantity = localStorage.getItem('quantity');
-  return quantity ? JSON.parse(quantity) : [];
-};
-
 export const saveQuantity = (span, id) => {
   const cartProducts = [...getSavedCartIDs()];
   const indexProduct = cartProducts.indexOf(id);
@@ -50,7 +50,7 @@ export const saveQuantity = (span, id) => {
   const quantity = getSavedQuantity();
 
   const quantityPlus = quantity.map((q, index) => {
-    if (index == indexProduct) {
+    if (index === indexProduct) {
       return Number(q) + 1;
     }
     return Number(q);
@@ -67,7 +67,7 @@ export const removeQty = (span, id) => {
   const quantity = getSavedQuantity();
 
   const quantityPlus = quantity.map((q, index) => {
-    if (index == indexProduct) {
+    if (index === indexProduct) {
       return Number(q) - 1;
     }
     return Number(q);

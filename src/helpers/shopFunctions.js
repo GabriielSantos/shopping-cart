@@ -46,11 +46,15 @@ export const getIdFromProduct = (product) => (
  * @param {Element} li - Elemento do produto a ser removido do carrinho.
  * @param {string} id - ID do produto a ser removido do carrinho.
  */
+
+const searchClass = 'total-price';
+
 const removeCartProduct = async (li, id, span) => {
   li.remove();
   removeCartID(id);
   const productData = await fetchProduct(id);
-  const totalPriceEl = document.getElementsByClassName('total-price')[0];
+
+  const totalPriceEl = document.getElementsByClassName(searchClass)[0];
   let totalPrice = parseFloat(totalPriceEl.innerHTML);
   totalPrice -= (productData.price) * Number(span.innerHTML);
   totalPriceEl.innerHTML = totalPrice.toFixed(2);
@@ -59,7 +63,7 @@ const removeCartProduct = async (li, id, span) => {
   counter.innerHTML = Number(counter.innerHTML) - Number(span.innerHTML);
 
   localStorage.setItem('counter', JSON.stringify(counter.innerHTML));
-  localStorage.setItem('totalPrice', JSON.stringify(totalPriceEl.innerHTML));
+  localStorage.setItem(searchClass, JSON.stringify(totalPriceEl.innerHTML));
 };
 
 const removeCartQty = async (li, id, span) => {
@@ -72,7 +76,7 @@ const removeCartQty = async (li, id, span) => {
   }
 
   const productData = await fetchProduct(id);
-  const totalPriceEl = document.getElementsByClassName('total-price')[0];
+  const totalPriceEl = document.getElementsByClassName(searchClass)[0];
   let totalPrice = parseFloat(totalPriceEl.innerHTML);
   totalPrice -= (productData.price);
   totalPriceEl.innerHTML = totalPrice.toFixed(2);
@@ -81,7 +85,7 @@ const removeCartQty = async (li, id, span) => {
   counter.innerHTML = Number(counter.innerHTML) - 1;
 
   localStorage.setItem('counter', JSON.stringify(counter.innerHTML));
-  localStorage.setItem('totalPrice', JSON.stringify(totalPriceEl.innerHTML));
+  localStorage.setItem(searchClass, JSON.stringify(totalPriceEl.innerHTML));
 };
 
 const addCartQty = async (id, span) => {
@@ -102,7 +106,7 @@ const addCartQty = async (id, span) => {
   counter.innerHTML = count;
 
   localStorage.setItem('counter', JSON.stringify(counter.innerHTML));
-  localStorage.setItem('totalPrice', JSON.stringify(totalPriceEl.innerHTML));
+  localStorage.setItem(searchClass, JSON.stringify(totalPriceEl.innerHTML));
 };
 
 /**
@@ -143,8 +147,8 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   li.appendChild(removeButton);
 
   const qty = createCustomElement('div', 'qty');
-  const removeQty = createCustomElement('button', 'remove-qty', '-');
-  qty.appendChild(removeQty);
+  const removeQty2 = createCustomElement('button', 'remove-qty', '-');
+  qty.appendChild(removeQty2);
   const span = createCustomElement('span', 'product-qty', '1');
   qty.appendChild(span);
   const addQty = createCustomElement('button', 'add-qty', '+');
@@ -152,7 +156,7 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   infoContainer.appendChild(qty);
 
   addQty.addEventListener('click', () => addCartQty(id, span));
-  removeQty.addEventListener('click', () => removeCartQty(li, id, span));
+  removeQty2.addEventListener('click', () => removeCartQty(li, id, span));
   removeButton.addEventListener('click', () => removeCartProduct(li, id, span));
 
   return li;
