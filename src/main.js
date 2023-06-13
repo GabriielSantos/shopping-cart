@@ -187,7 +187,7 @@ if (localStorage.getItem('totalPrice')) {
 }
 
 const ids = getSavedCartIDs();
-console.log(ids);
+
 Promise.all(ids.map((id) => fetchProduct(id))).then((values) => {
   values.forEach((value) => {
     const li = createCartProductElement(value);
