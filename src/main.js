@@ -1,7 +1,7 @@
-import { getSavedCartIDs, saveCartID, saveQuantity } from './helpers/cartFunctions.js';
-import { searchCep } from './helpers/cepFunctions.js';
-import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions.js';
-import { createCartProductElement, createProductElement } from './helpers/shopFunctions.js';
+import { getSavedCartIDs, saveCartID, saveQuantity } from './helpers/cartFunctions';
+import { searchCep } from './helpers/cepFunctions';
+import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
+import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
 
 const products = document.getElementsByClassName('products')[0];
 const messages = document.getElementById('messages');
@@ -187,8 +187,8 @@ if (localStorage.getItem('totalPrice')) {
 }
 
 const ids = getSavedCartIDs();
-const productsData = ids.map((id) => fetchProduct(id));
-Promise.all(productsData).then((values) => {
+console.log(ids);
+Promise.all(ids.map((id) => fetchProduct(id))).then((values) => {
   values.forEach((value) => {
     const li = createCartProductElement(value);
     ol.appendChild(li);
