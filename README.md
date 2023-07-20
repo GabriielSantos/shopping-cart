@@ -1,6 +1,6 @@
 # Shopping Cart
 
-# Contexto
+## Contexto
 Este projeto consiste em uma aplicação de um Shopping Cart, através da requisição a uma API do Mercado livre, são disponibilizados os produtos na tela. Foi implementada as funcionalidades para se adicionar os itens ao carrinho.
 
 ## Técnologias usadas
